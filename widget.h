@@ -21,6 +21,9 @@ private:
     QList<QLabel*> m_input_display;
     QTimer* m_timer;
     gpio* m_gpio;
+    int counternum = 0;
+    QLabel* l_Counter = new QLabel;
+    int no;
 
 };
 

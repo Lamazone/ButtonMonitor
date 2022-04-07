@@ -26,6 +26,9 @@ Widget::Widget(QWidget *parent)
         grid->addWidget(state, 1, column++); // links oben (2. Zeile / 1. - 3. Spalte)
         m_input_display.push_back(state);
     }
+    
+    l_Counter->setAlignment(Qt::AlignCenter);
+    grid->addWidget(l_Counter, 2, 1);
 
     // initialize hardware
     m_gpio = new gpio();
@@ -44,8 +47,24 @@ Widget::~Widget()
 void Widget::updateButtonState()
 {
     int n = 0;
-    for (auto pin : BUTTONS){
+    for (auto pin : BUTTONS)
+    {   
         int state = !m_gpio->get(pin);
         m_input_display[n++]->setText(QString::number(state));
+        if(n == 0)
+        {
+            counternum++;
+        }
+        else if (n == 1)
+        {
+            counternum = 0;
+        }
+        else if (n == 2)
+        {
+            counternum--;
+        }
+
     }
+    l_Counter->setText("Counter: " + QString::number(counternum));
 }
+
