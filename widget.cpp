@@ -50,20 +50,23 @@ void Widget::updateButtonState()
     for (auto pin : BUTTONS)
     {   
         int state = !m_gpio->get(pin);
-        m_input_display[n++]->setText(QString::number(state));
-        if(n == 0)
+        if(m_gpio->edgeDetect(state,true,n))
         {
-            counternum++;
-        }
-        else if (n == 1)
-        {
-            counternum = 0;
-        }
-        else if (n == 2)
-        {
-            counternum--;
+            if(n == 0)
+            {
+                counternum--;
+            }
+            else if (n == 1)
+            {
+                counternum = 0;
+            }
+            else if (n == 2)
+            {
+                counternum++;
+            }
         }
 
+        m_input_display[n++]->setText(QString::number(state));
     }
     l_Counter->setText("Counter: " + QString::number(counternum));
 }

@@ -46,3 +46,24 @@ bool gpio::get(int pin)
 {
     return lgGpioRead(m_handle, pin);
 }
+
+bool gpio::edgeDetect(int state, bool edge, int nr)
+{
+
+    if(m_oldstate[nr]==state)
+    {
+
+        if(state==edge)
+        {
+            m_oldstate[nr]= !state;
+           return true;
+        }
+        m_oldstate[nr]= !state;
+        return false;
+    }
+    else
+    {
+        m_oldstate[nr]= !state;
+        return false;
+    }
+}
